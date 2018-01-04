@@ -77,7 +77,7 @@ These requirements do not preclude an external library from becoming a permafill
 
 - High usage
 - Agreed amongst browsers and developers to be a canonical implementation
-- Versionless
+- Versionless (i.e. version with the browser)
 - Committed to backwards compatibility 
 - Willing to cede final code approval to browsers 
 
