@@ -47,7 +47,7 @@ Finally, there is a question as to whether we need explicit import at all. We co
 # Benefits
 By implementing as unprivileged Javascript, we are forced to identify and ship the appropriate low-level primitives needed to build the high-level feature. This gives web developers the tools they need to build their own versions and it allows us to experiment with the API design as a pure JS library before shipping.
 
-Using modules means that features are explicitly imported, so the global namespace isn't poluted and sites only pay runtime costs for the features they use.
+Using modules means that features are explicitly imported, so the global namespace isn't polluted and sites only pay runtime costs for the features they use.
 
 Implementing in Javascript also provides a clean implementation boundary. Changing part of the Javascript implementation can't create thorny bugs throughout the renderer.
 
