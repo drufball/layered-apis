@@ -1,7 +1,7 @@
 # Permafills
 Shipping high-level features as self-hosted JS imports
 
-# Problem
+## Problem
 The [Extensible Web Manifesto](https://extensiblewebmanifesto.org/)’s focus on low-level primitives promotes a healthy, well-layered platform that encourages innovation and experimentation in JavaScript. But focusing on low-level primitives means that developers must build most application-level components on their own, creating a high barrier to entry for new web developers. 
 
 This lack of built-in high-level features also bloats page load size. The average site payload is [2.5 MB and takes 19 seconds to load](https://www.doubleclickbygoogle.com/articles/mobile-speed-matters/).
@@ -10,14 +10,14 @@ However, shipping high-level features carries its own risks. Standardizing and b
 
 Shipping features also incurs an ongoing maintenance and runtime cost — every new feature pollutes the browser namespace, increases JS startup costs, and represents a new surface to introduce bugs throughout the codebase.
 
-# Goal
+## Goal
 Enable browsers to ship high-level features such that:
 
 - Runtime/maintenance cost scales
 - Experimentation with real world websites is possible before shipping
 - Developers are able to build their own version of a high-level feature if ours does not meet their use cases
 
-# Solution
+## Solution
 Implement high-level features as unprivileged JavaScript modules, and bundle those libraries with browsers. In all other respects, these features would be like normal web APIs: 
 
 - Follow the normal cross-browser standardization process
@@ -44,50 +44,50 @@ This would require no new syntax and could be handled under-the-hood by browser 
 
 Finally, there is a question as to whether we need explicit import at all. We could pursue ways to identify features that are used on the page and automatically import them. Perhaps through a manifest of some sort.
 
-# Benefits to web developers
+## Benefits to web developers
 
-## Cheaper high-level features
+### Cheaper high-level features
 
 Permafills will reduce the amount of script developers need to load over the network. 
 
 Also, because developers explicitly import the features they use, we don’t bloat the global context of the platform for everyone. You only pay the cost of a feature (including increased JS context start time) for features that you use.
 
-## Encourage layering
+### Encourage layering
 
 By implementing permafills as unprivileged JavaScript, we are forced to identify and ship the appropriate low-level primitives needed to build the high-level feature. This gives web developers the tools they need to build their own applications and libraries.
 
-## Hackable
+### Hackable
 
 Because permafills are maintained in the open and written in JavaScript, developers can more easily contribute to them. We'd maintain the same high bar we do for contributions to a web standard, but the turnaround time for developers getting their feature requests (or bug fixes!) into the versions shipping with browsers could be shorter.
 
-## Built-in fallback
+### Built-in fallback
 
 Permafills are instantly usable in all browsers via the built-in fallback to non-permafill polyfill code.
 
-# Benefits to browser implementers
+## Benefits to browser implementers
 
-## Healthier platform implementation
+### Healthier platform implementation
 
 Implementing in JavaScript provides a clean implementation boundary. Changing a JavaScript library can't create thorny bugs throughout the renderer.
 
-## Code sharing
+### Code sharing
 
 Permafill code will be shared between browsers, making interop trivial.
 
 Code sharing also allows browsers to pursue different priorities and features, while benefiting from the various directions and investments of other browsers.
 
-## Decreased maintenance overhead
+### Decreased maintenance overhead
 
 Implementers often shy away from building high-level features since they can create large, ongoing technical debt. Permafills can reduce this risk. Browsers can stop bundling a given permafill and just maintain a browser: URL-to-CDN-URL mapping instead.
 
-# Caveats
+## Caveats
 We believe that the restriction of using unprivileged JavaScript, and the benefits that come from this, is necessary in order for the web to responsibly ship high-level features. However, this restriction has its tradeoffs:
 
 - Privacy and security sensitive features could not be implemented using this method
 - Developers or libraries that modify the prototypes of primitives could break permafills
 - Features that require new low-level primitives would be blocked on those primitives shipping
 
-# FAQ
+## FAQ
 __Will we ship existing libraries as permafills?__
 
 We believe that existing libraries won’t be a good fit for permafills because permafills will need to version with the browser, be backwards-compatible, and owned by the browsers bundling the code.
