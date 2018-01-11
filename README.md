@@ -44,14 +44,41 @@ This would require no new syntax and could be handled under-the-hood by browser 
 
 Finally, there is a question as to whether we need explicit import at all. We could pursue ways to identify features that are used on the page and automatically import them. Perhaps through a manifest of some sort.
 
-# Benefits
-By implementing as unprivileged JavaScript, we are forced to identify and ship the appropriate low-level primitives needed to build the high-level feature. This gives web developers the tools they need to build their own versions and it allows us to experiment with the API design as a pure JS library before shipping.
+# Benefits to web developers
 
-Using modules means that features are explicitly imported, so the global namespace isn't polluted and sites only pay runtime costs for the features they use.
+## Cheaper high-level features
 
-Implementing in JavaScript also provides a clean implementation boundary. Changing part of the JavaScript implementation can't create thorny bugs throughout the renderer.
+Permafills will reduce the amount of script developers need to load over the network. 
 
-Finally, there is the potential for browsers to share these JavaScript implementations. 
+Also, because developers explicitly import the features they use, we don’t bloat the global context of the platform for everyone. You only pay the cost of a feature (including increased JS context start time) for features that you use.
+
+## Encourage layering
+
+By implementing permafills as unprivileged JavaScript, we are forced to identify and ship the appropriate low-level primitives needed to build the high-level feature. This gives web developers the tools they need to build their own applications and libraries.
+
+## Hackable
+
+Because permafills are maintained in the open and written in JavaScript, developers can more easily contribute to them. We'd maintain the same high bar we do for contributions to a web standard, but the turnaround time for developers getting their feature requests (or bug fixes!) into the versions shipping with browsers could be shorter.
+
+## Built-in fallback
+
+Permafills are instantly usable in all browsers via the built-in fallback to non-permafill polyfill code.
+
+# Benefits to browser implementers
+
+## Healthier platform implementation
+
+Implementing in JavaScript provides a clean implementation boundary. Changing a JavaScript library can't create thorny bugs throughout the renderer.
+
+## Code sharing
+
+Permafill code will be shared between browsers, making interop trivial.
+
+Code sharing also allows browsers to pursue different priorities and features, while benefiting from the various directions and investments of other browsers.
+
+## Decreased maintenance overhead
+
+Implementers often shy away from building high-level features since they can create large, ongoing technical debt. Permafills can reduce this risk. Browsers can stop bundling a given permafill and just maintain a browser: URL-to-CDN-URL mapping instead.
 
 # Caveats
 We believe that the restriction of using unprivileged JavaScript, and the benefits that come from this, is necessary in order for the web to responsibly ship high-level features. However, this restriction has its tradeoffs:
