@@ -8,7 +8,7 @@ This lack of built-in high-level features also bloats page load size. The averag
 
 However, shipping high-level features carries its own risks. Standardizing and building the right API becomes exponentially harder as the complexity of a feature increases. The web has a long history of magic features that don't solve the right use cases. When we get something wrong with a high-level feature, developers are often left with no other way to achieve their goals, so they contort the feature in harmful ways to make it work.
 
-Shipping features also incurs an ongoing maintenance and runtime cost - every new feature pollutes the browser namespace, increases JS startup costs, and represents a new surface to introduce bugs throughout the codebase.
+Shipping features also incurs an ongoing maintenance and runtime cost — every new feature pollutes the browser namespace, increases JS startup costs, and represents a new surface to introduce bugs throughout the codebase.
 
 # Goal
 Enable browsers to ship high-level features such that:
@@ -36,7 +36,7 @@ This allows developers to provide a 3rd party library fallback for browsers that
 
 ```javascript
 <script type="module" 
-        src="browser:infinite-list | https://cdn.example.com/infinite-list.js">
+        src="browser:infinite-list|https://cdn.example.com/infinite-list.js">
 </script>
 ```
 
@@ -45,16 +45,16 @@ This would require no new syntax and could be handled under-the-hood by browser 
 Finally, there is a question as to whether we need explicit import at all. We could pursue ways to identify features that are used on the page and automatically import them. Perhaps through a manifest of some sort.
 
 # Benefits
-By implementing as unprivileged Javascript, we are forced to identify and ship the appropriate low-level primitives needed to build the high-level feature. This gives web developers the tools they need to build their own versions and it allows us to experiment with the API design as a pure JS library before shipping.
+By implementing as unprivileged JavaScript, we are forced to identify and ship the appropriate low-level primitives needed to build the high-level feature. This gives web developers the tools they need to build their own versions and it allows us to experiment with the API design as a pure JS library before shipping.
 
 Using modules means that features are explicitly imported, so the global namespace isn't polluted and sites only pay runtime costs for the features they use.
 
-Implementing in Javascript also provides a clean implementation boundary. Changing part of the Javascript implementation can't create thorny bugs throughout the renderer.
+Implementing in JavaScript also provides a clean implementation boundary. Changing part of the JavaScript implementation can't create thorny bugs throughout the renderer.
 
-Finally, there is the potential for browsers to share these Javascript implementations. 
+Finally, there is the potential for browsers to share these JavaScript implementations. 
 
 # Caveats
-We believe that the restriction of using unprivileged Javascript, and the benefits that come from this, is necessary in order for the web to responsibly ship high-level features. However, this restriction has its tradeoffs:
+We believe that the restriction of using unprivileged JavaScript, and the benefits that come from this, is necessary in order for the web to responsibly ship high-level features. However, this restriction has its tradeoffs:
 
 - Privacy and security sensitive features could not be implemented using this method
 - Developers or libraries that modify the prototypes of primitives could break permafills
