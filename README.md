@@ -75,7 +75,7 @@ Requiring that layered APIs sit on top of the platform's primitives provides a c
 
 ### Decreased maintenance overhead
 
-Implementers often shy away from building high-level features since they can create large, ongoing technical debt. Layered APIs can reduce this risk. Browsers can stop bundling a given layered and just maintain a API-dentifier-to-CDN-URL mapping instead, that lazily loads the API as a JavaScript library.
+Implementers often shy away from building high-level features since they can create large, ongoing technical debt. Layered APIs can reduce this risk, as the clean separation means that much less maintenance work will be required. (Generally, maintenance would only be required if the browser purposefully breaks backward-compatibility in a lower-level features the layered API builds on, or fixes some bug upon which the layered API implementation inadvertently depended.)
 
 ### Security and privacy
 
