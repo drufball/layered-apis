@@ -89,3 +89,27 @@ We believe that the layering restriction, and the benefits that come from it, is
 
 - Privacy and security sensitive features could not be implemented using this method
 - Features that require new low-level primitives would be blocked on those primitives being standardized and shipped first
+
+## What makes a good layered API candidate?
+
+When judging whether a feature is a good fit for the layered APIs effort, here are some criteria to consider:
+
+- **Does this feature need new low-level capabilities to work successfully?** If so it, it isn't a good candidate yet; we need to fill in those gaps first.
+
+- **Can this feature stand on its own, or does it require integration into existing APIs?** For example, adding methods or properties to existing web platform objects like `Array` or `HTMLElement` is potentially tricky, and we're not sure yet whether we should create layered APIs that, upon importing, have global side effects. For now, features that require such integration are not a good candidate for layered APIs.
+
+- **Is this feature tricky to implement performantly or correctly?** It's better for the platform if such features can be standardized once, and implemented by browsers, instead of requiring developers to get them right every time independently. This criteria motivates the potential infinite list or [tasklets](https://github.com/GoogleChromeLabs/tasklets) permafills.
+
+- **Do the APIs for this feature vary wildly across the JS ecosystem, or have they mostly settled down?** Layered APIs will be less successful when they try to pick a winner that excludes popular styles or paradigms. For example, a virtual DOM layered API would likely be a poor idea at this time.
+
+- **Does this feature involve a lot of styling choices for its UI?** If so, we're still figuring that out (see below), so the feature is probably not (yet) a good fit for the layered APIs effort.
+
+- **Will this feature be used commonly, or rarely?** In the long term, layered APIs are a good fit for both cases. But for the initial batch of layered APIs, we'd like to focus on ones that will be used widely to show their value in terms of bringing down code size and making it easier to build web apps out of the box.
+
+## Styling and UI-component layered APIs
+
+Several potentially good layered APIs, including the [infinite list component](https://github.com/domenic/infinite-list-study-group), are UI components. Such components should generally come with minimal styling—at least as minimal, if not more, than existing standard HTML UI components. It would not be appropriate to encode a specific UI styling, like Material Design (Google) or Cupertino (Apple), into the layered APIs.
+
+At the same time, layered APIs should be extremely styleable: authors should be able to make them fit into their pages, ideally with only CSS modifications. In the current landscape, this will require care; e.g. we cannot over-use shadow DOM, since it cannot be styled inside. In the future, [CSS shadow parts](https://tabatkins.github.io/specs/css-shadow-parts/) will greatly help with this.
+
+That said, it’s important that built in UI components on the platform look and feel good by default. So there’s an open problem we’ll have to figure out for how UI components should be themed by default such that they can be consistent with OS-specific expectations. We can avoid dealing with this problem by starting with UI components that have no visual aspect to them (e.g. infinite list, which has no expectations, vs. new form controls, which do).
