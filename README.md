@@ -29,23 +29,25 @@ We propose a new syntax for accessing certain web platform features, known as _l
 
 ```html
 <script type="module"
-        src="std:infinite-list|https://some.cdn.com/infinite-list.js">
+        src="std:virtual-list|https://some.cdn.com/virtual-list.js">
 </script>
 
-<infinite-list>...</infinite-list>
+<virtual-list>...</virtual-list>
 ```
 
 ```html
 <script type="module">
-import { get, set } from "std:async-local-storage|https://other.cdn.com/async-local-storage.js";
+import { storage } from "std:async-local-storage|https://other.cdn.com/async-local-storage.js";
 
-get("key").then(...);
+storage.get("key").then(...);
 </script>
 ```
 
 As shown here, this `std:x|y` URL syntax contains both an _API identifier_ (e.g. "`infinite-list`" or "`async-local-storage`"), and a _fallback URL_. If the browser does not support the layered API specified by the given API identifier, it instead loads the contents of the fallback URL.
 
 See [this document](https://docs.google.com/document/d/1jRQjQP8DmV7RL75u_67ps3SB1sjfa1bFZmbCMfJCvrM/edit) for an exploration of alternate syntax options; the above is our tentative choice for now.
+
+See [the proto-spec](./spec.md) for more details on LAPIs infrastructure.
 
 ### Part 2: the standards process
 
