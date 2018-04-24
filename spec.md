@@ -84,7 +84,7 @@ We make the following changes to ensure that when loading modules, we retrieve t
 
 Modify [resolve a module specifier](https://html.spec.whatwg.org/multipage/webappapis.html#resolve-a-module-specifier)'s first step as follows:
 
-1. Let _parsed_ be the result of applying the [URL parser](https://url.spec.whatwg.org/#concept-url-parser) to specifier. If parsed is not failure, then return the [layered API fetching URL](#user-content-layered-api-fetching-url) for parsed.
+1. Let _parsed_ be the result of applying the [URL parser](https://url.spec.whatwg.org/#concept-url-parser) to specifier. If _parsed_ is not failure, then return the [layered API fetching URL](#user-content-layered-api-fetching-url) given _parsed_ and _script_'s [base URL](https://html.spec.whatwg.org/multipage/webappapis.html#concept-script-base-url).
 
 This impacts `import` statements and `import()` calls.
 
@@ -92,14 +92,14 @@ This impacts `import` statements and `import()` calls.
 
 Insert new first steps into [fetch a module script graph](https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-module-script-tree):
 
-1. Set _url_ to the [layered API fetching URL](#user-content-layered-api-fetching-url) for _url_.
+1. Set _url_ to the [layered API fetching URL](#user-content-layered-api-fetching-url) given _url_ and the [current settings object](https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object)'s [API base URL](https://html.spec.whatwg.org/multipage/webappapis.html#api-base-url).
 1. If _url_ is failure, asynchronously complete this algorithm with null.
 
 This impacts `<script type="module">`'s `src=""` resolution and `<link rel="modulepreload">`'s `href=""` resolution.
 
 ### Supporting algorithm
 
-<p id="layered-api-fetching-url">Both of the above designate to the following algorithm for determining the <dfn>layered API fetching URL</dfn> given a URL <var>url</var>:
+<p id="layered-api-fetching-url">Both of the above designate to the following algorithm for determining the <dfn>layered API fetching URL</dfn> given a URL <var>url</var> and a URL <var>baseURLForFallback</var>:
 
 1. If _url_'s [scheme](https://url.spec.whatwg.org/#concept-url-scheme) is not "`std`", return _url_.
 1. Let _path_ be _url_'s [path](https://url.spec.whatwg.org/#concept-url-path)[0].
@@ -107,9 +107,9 @@ This impacts `<script type="module">`'s `src=""` resolution and `<link rel="modu
 1. Let _fallback_ be the portion of _path_ after the first U+007C, or null if no U+007C is present.
 1. If the layered API identified by _path_ is implemented by this user agent, return the result of [parsing](https://url.spec.whatwg.org/#concept-url-parser) the concatenation of "`std:`" with _identifier_.
 1. If _fallback_ is null, return failure.
-1. Return the result of parsing _fallback_.
+1. Return the result of [parsing](https://url.spec.whatwg.org/#concept-url-parser) _fallback_ with the base URL _baseURLForFallback_.
 
-This operation maps URLs of the form `std:x|y` to either `std:x` or `y` URLs.
+This operation maps URLs of the form `std:x|y` to a specific absolute URL: either `std:x`, or `y` (resolved relative to the given base).
 
 ## Specification consequences
 
@@ -143,3 +143,15 @@ Feature detection of the layered API mechanism is possible using code such as th
 ```
 
 This feature detection is asynchronous, but does not require any network round-trip.
+
+### Relative fallback URLs work
+
+Although all of our examples tend to use absolute fallback URLs, since we anticipate fallbacks being located on CDNs or similar, relative URLs also work:
+
+```js
+import { storage } from "std:async-local-storage:lib/polyfills/als.js";
+```
+
+```html
+<script type="module" src="std:virtual-list|/node_modules/virtual-list/element.mjs">
+```
