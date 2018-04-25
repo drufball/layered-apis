@@ -2,6 +2,8 @@
 
 This document contains the basics of a spec for the [layered APIs infrastructure](./README.md#part-1-the-infrastructure) discussed in the README. It is by no means finalized or formalized, but it gives implementers something to look at and possibly prototype with.
 
+We expect that if this spec gains acceptance it would eventually be incorporated in the HTML Standard's script loading sections.
+
 ## Introduction
 
 Although layered APIs are loaded as JavaScript modules, they cannot have web-exposed source code. Their source code is an implementation detail, and depending on the browser, may not be in JavaScript.
