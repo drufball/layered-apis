@@ -117,9 +117,11 @@ Here are some things to note about the above proto-spec:
 
 ### Only impacts module loading
 
-Because this specification only modifies module specifier resolution and module fetching, its impact is limited. Unlike `blob:` URLs, `std:` URLs are not something that can be seen by `fetch()`, `<img>`, etc.
+Because this specification only modifies module specifier resolution and module fetching, its impact is limited. Unlike `blob:` URLs that wrap `Blob` objects, `std:` URLs are not something that can be seen by `fetch()`, `<img>`, etc.
 
 Indeed, it's not really accurate to treat `std:x|y` URLs as URLs at all. They are more just mechanisms for interfacing with the platform's module resolution system. They do not have an origin; they are not seen by service workers; they are not affected by CSP.
+
+This is in some ways similar to `blob:` URLs that wrap `MediaSource` objects: those are handled specially in HTML's [media resource fetch algorithm](https://html.spec.whatwg.org/#concept-media-load-resource), and never make it to platform's general fetching infrastructure (e.g. the [scheme fetch](https://fetch.spec.whatwg.org/#scheme-fetch) algorithm asserts that it never sees such `blob:` URLs).
 
 Future work may make it possible to reuse JavaScript import specifiers in other URL-accepting contexts, e.g. people have proposed `<img src="package:bootstrap/arrow.svg">` to [integrate with package name maps](https://github.com/domenic/package-name-maps/issues/23). However, this would need separate work to integrate with `std:x|y` URLs, since we would need to preserve the property of these resources being opaque to hide their implementation details.
 
