@@ -115,3 +115,17 @@ Several potentially good layered APIs, including the [infinite virtual list comp
 At the same time, layered APIs should be extremely styleable: authors should be able to make them fit into their pages, ideally with only CSS modifications. In the current landscape, this will require care; e.g. we cannot over-use shadow DOM, since it cannot be styled inside. In the future, [CSS shadow parts](https://tabatkins.github.io/specs/css-shadow-parts/) will greatly help with this.
 
 That said, it’s important that built in UI components on the platform look and feel good by default. So there’s an open problem we’ll have to figure out for how UI components should be themed by default such that they can be consistent with OS-specific expectations. We can avoid dealing with this problem by starting with UI components that have no visual aspect to them (e.g. virtual list, which has no expectations, vs. new form controls, which do).
+
+## Trying these ideas out
+
+We're currently prototyping the ideas in this repository in Blink, while working on two particular layered APIs. Those are:
+
+* [`<virtual-list>`](https://github.com/valdrinkoshi/virtual-list): a HTML element that maps a provided set of JavaScript objects onto DOM nodes, and renders only the DOM nodes that are currently visible, leaving the rest "virtualized".
+* [Async local storage](https://github.com/domenic/async-local-storage): an asynchronous key-value store, including isolated storage areas and support for non-string values, layered on top of IndexedDB.
+
+You can try these APIs, as well as the general LAPI infrastructure, in Chrome versions after 68.0.3420.0 (use [Chrome Canary](https://www.google.com/chrome/browser/canary.html)) with the `#enable-layered-api` flag flipped in `chrome://flags`. (Alternately, you can instead use `#enable-experimental-productivity-features` to get LAPIs plus some [feature policy](https://github.com/WICG/feature-policy/) work, or use the general `#enable-experimental-web-platform-features` flag to get all the currently-flagged web platform features.)
+
+For demos, check out the [`<virtual-list>` demo repository](https://valdrinkoshi.github.io/virtual-list/demo/examples.html), or play with the following:
+
+* [`<virtual-list>` playground](glitch.com/edit/#!/lowly-pantry)
+* [Async local storage playground](glitch.com/edit/#!/bead-hubcap)
