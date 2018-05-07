@@ -104,10 +104,11 @@ This impacts `<script type="module">`'s `src=""` resolution and `<link rel="modu
 <p id="layered-api-fetching-url">Both of the above designate to the following algorithm for determining the <dfn>layered API fetching URL</dfn> given a URL <var>url</var> and a URL <var>baseURLForFallback</var>:
 
 1. If _url_'s [scheme](https://url.spec.whatwg.org/#concept-url-scheme) is not "`std`", return _url_.
-1. Let _path_ be _url_'s [path](https://url.spec.whatwg.org/#concept-url-path)[0].
-1. Let _identifier_ be the portion of _path_ before the first U+007C (|), or all of _path_ if no U+007C is present.
-1. Let _fallback_ be the portion of _path_ after the first U+007C, or null if no U+007C is present.
-1. If the layered API identified by _path_ is implemented by this user agent, return the result of [parsing](https://url.spec.whatwg.org/#concept-url-parser) the concatenation of "`std:`" with _identifier_.
+1. Let _serialized_ be the result of running the [URL serializer](https://url.spec.whatwg.org/#concept-url-serializer) on _url_.
+1. Remove the leading "`std:`" from _serialized_.
+1. Let _identifier_ be the portion of _serialized_ before the first U+007C (|), or all of _serialized_ if no U+007C is present.
+1. Let _fallback_ be the portion of _serialized_ after the first U+007C, or null if no U+007C is present.
+1. If the layered API identified by _serialized_ is implemented by this user agent, return the result of [parsing](https://url.spec.whatwg.org/#concept-url-parser) the concatenation of "`std:`" with _identifier_.
 1. If _fallback_ is null, return failure.
 1. Return the result of [parsing](https://url.spec.whatwg.org/#concept-url-parser) _fallback_ with the base URL _baseURLForFallback_.
 
