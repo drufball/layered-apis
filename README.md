@@ -127,5 +127,5 @@ You can try these APIs, as well as the general LAPI infrastructure, in Chrome ve
 
 For demos, check out the [`<virtual-list>` demo repository](https://valdrinkoshi.github.io/virtual-list/demo/examples.html), or play with the following:
 
-* [`<virtual-list>` playground](glitch.com/edit/#!/lowly-pantry)
-* [Async local storage playground](glitch.com/edit/#!/bead-hubcap)
+* [`<virtual-list>` playground](https://glitch.com/edit/#!/lowly-pantry)
+* [Async local storage playground](https://glitch.com/edit/#!/bead-hubcap)
