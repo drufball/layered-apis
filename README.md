@@ -29,10 +29,10 @@ We propose a new syntax for accessing certain web platform features, known as _l
 
 ```html
 <script type="module"
-        src="std:virtual-list|https://some.cdn.com/virtual-list.js">
+        src="std:infinite-list|https://some.cdn.com/infinite-list.js">
 </script>
 
-<virtual-list>...</virtual-list>
+<infinite-list>...</infinite-list>
 ```
 
 ```html
