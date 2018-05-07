@@ -43,7 +43,7 @@ storage.get("key").then(...);
 </script>
 ```
 
-As shown here, this `std:x|y` URL syntax contains both an _API identifier_ (e.g. "`infinite-list`" or "`async-local-storage`"), and a _fallback URL_. If the browser does not support the layered API specified by the given API identifier, it instead loads the contents of the fallback URL.
+As shown here, this `std:x|y` URL syntax contains both an _API identifier_ (e.g. "`virtual-list`" or "`async-local-storage`"), and a _fallback URL_. If the browser does not support the layered API specified by the given API identifier, it instead loads the contents of the fallback URL.
 
 See [this document](https://docs.google.com/document/d/1jRQjQP8DmV7RL75u_67ps3SB1sjfa1bFZmbCMfJCvrM/edit) for an exploration of alternate syntax options; the above is our tentative choice for now.
 
@@ -100,7 +100,7 @@ When judging whether a feature is a good fit for the layered APIs effort, here a
 
 - **Can this feature stand on its own, or does it require integration into existing APIs?** For example, adding methods or properties to existing web platform objects like `Array` or `HTMLElement` is potentially tricky, and we're not sure yet whether we should create layered APIs that, upon importing, have global side effects. For now, features that require such integration are not a good candidate for layered APIs.
 
-- **Is this feature tricky to implement performantly or correctly?** It's better for the platform if such features can be standardized once, and implemented by browsers, instead of requiring developers to get them right every time independently. This criteria motivates the potential infinite list or [tasklets](https://github.com/GoogleChromeLabs/tasklets) permafills.
+- **Is this feature tricky to implement performantly or correctly?** It's better for the platform if such features can be standardized once, and implemented by browsers, instead of requiring developers to get them right every time independently. This criteria motivates the potential infinite virtual list or [tasklets](https://github.com/GoogleChromeLabs/tasklets) permafills.
 
 - **Do the APIs for this feature vary wildly across the JS ecosystem, or have they mostly settled down?** Layered APIs will be less successful when they try to pick a winner that excludes popular styles or paradigms. For example, a virtual DOM layered API would likely be a poor idea at this time.
 
@@ -110,8 +110,8 @@ When judging whether a feature is a good fit for the layered APIs effort, here a
 
 ## Styling and UI-component layered APIs
 
-Several potentially good layered APIs, including the [infinite list component](https://github.com/domenic/infinite-list-study-group), are UI components. Such components should generally come with minimal styling—at least as minimal, if not more, than existing standard HTML UI components. It would not be appropriate to encode a specific UI styling, like Material Design (Google) or Cupertino (Apple), into the layered APIs.
+Several potentially good layered APIs, including the [infinite virtual list component](https://github.com/domenic/infinite-list-study-group), are UI components. Such components should generally come with minimal styling—at least as minimal, if not more, than existing standard HTML UI components. It would not be appropriate to encode a specific UI styling, like Material Design (Google) or Cupertino (Apple), into the layered APIs.
 
 At the same time, layered APIs should be extremely styleable: authors should be able to make them fit into their pages, ideally with only CSS modifications. In the current landscape, this will require care; e.g. we cannot over-use shadow DOM, since it cannot be styled inside. In the future, [CSS shadow parts](https://tabatkins.github.io/specs/css-shadow-parts/) will greatly help with this.
 
-That said, it’s important that built in UI components on the platform look and feel good by default. So there’s an open problem we’ll have to figure out for how UI components should be themed by default such that they can be consistent with OS-specific expectations. We can avoid dealing with this problem by starting with UI components that have no visual aspect to them (e.g. infinite list, which has no expectations, vs. new form controls, which do).
+That said, it’s important that built in UI components on the platform look and feel good by default. So there’s an open problem we’ll have to figure out for how UI components should be themed by default such that they can be consistent with OS-specific expectations. We can avoid dealing with this problem by starting with UI components that have no visual aspect to them (e.g. virtual list, which has no expectations, vs. new form controls, which do).
