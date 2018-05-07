@@ -90,18 +90,28 @@ Modify [resolve a module specifier](https://html.spec.whatwg.org/multipage/webap
 
 This impacts `import` statements and `import()` calls.
 
-### Fetch a module script graph
+### `<script>`'s prepare a script
 
-Insert new first steps into [fetch a module script graph](https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-module-script-tree):
+In [prepare a script](https://html.spec.whatwg.org/multipage/scripting.html#prepare-a-script), change step 23.6's "`module`" case to the following:
 
-1. Set _url_ to the [layered API fetching URL](#user-content-layered-api-fetching-url) given _url_ and the [current settings object](https://html.spec.whatwg.org/multipage/webappapis.html#current-settings-object)'s [API base URL](https://html.spec.whatwg.org/multipage/webappapis.html#api-base-url).
-1. If _url_ is failure, asynchronously complete this algorithm with null.
+1. Set _url_ to the [layered API fetching URL](#user-content-layered-api-fetching-url) given _url_ and _settings object_'s [API base URL](https://html.spec.whatwg.org/multipage/webappapis.html#api-base-url).
+1. If _url_ is failure, [queue a task](https://html.spec.whatwg.org/multipage/webappapis.html#queue-a-task) to [fire an event](https://dom.spec.whatwg.org/#concept-event-fire) named [`error`](https://html.spec.whatwg.org/multipage/indices.html#event-error) at the element, and return.
+1. [Fetch a module script graph](https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-module-script-tree) given _url_, _settings object_, "`script`", and _options_.
 
-This impacts `<script type="module">`'s `src=""` resolution and `<link rel="modulepreload">`'s `href=""` resolution.
+This impacts `<script type="module">`'s `src=""` resolution.
+
+### `<link rel="modulepreload">`'s obtain the resource
+
+In the "obtain the resource" algorithm for [link type "`modulepreload`"](https://html.spec.whatwg.org/#link-type-modulepreload), move the current step 5 (which creates the _settings object_ variable) up to before the current step 4. Then, insert the following steps after the current step 4:
+
+1. Set _url_ to the [layered API fetching URL](#user-content-layered-api-fetching-url) given _url_ and _settings object_'s [API base URL](https://html.spec.whatwg.org/multipage/webappapis.html#api-base-url).
+1. If _url_ is now failure, return.
+
+This impacts `<link rel="modulepreload">`'s `href=""` resolution.
 
 ### Supporting algorithm
 
-<p id="layered-api-fetching-url">Both of the above designate to the following algorithm for determining the <dfn>layered API fetching URL</dfn> given a URL <var>url</var> and a URL <var>baseURLForFallback</var>:
+<p id="layered-api-fetching-url">The above modifications delegate to the following algorithm for determining the <dfn>layered API fetching URL</dfn> given a URL <var>url</var> and a URL <var>baseURLForFallback</var>:
 
 1. If _url_'s [scheme](https://url.spec.whatwg.org/#concept-url-scheme) is not "`std`", return _url_.
 1. Let _path_ be _url_'s [path](https://url.spec.whatwg.org/#concept-url-path)[0].
