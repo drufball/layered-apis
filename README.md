@@ -125,7 +125,7 @@ We're currently prototyping the ideas in this repository in Blink, while working
 
 You can try these APIs, as well as the general LAPI infrastructure, in Chrome versions after 68.0.3420.0 (use [Chrome Canary](https://www.google.com/chrome/browser/canary.html)) with the `#enable-layered-api` flag flipped in `chrome://flags`. (Alternately, you can instead use `#enable-experimental-productivity-features` to get LAPIs plus some [feature policy](https://github.com/WICG/feature-policy/) work, or use the general `#enable-experimental-web-platform-features` flag to get all the currently-flagged web platform features.)
 
-For demos, check out the [`<virtual-list>` demo repository](https://valdrinkoshi.github.io/virtual-list/demo/examples.html), or play with the following:
+For demos, check out the [`<virtual-list>` demo repository](https://valdrinkoshi.github.io/virtual-list/demo/), or play with the following:
 
 * [`<virtual-list>` playground](https://glitch.com/edit/#!/lowly-pantry)
 * [Async local storage playground](https://glitch.com/edit/#!/bead-hubcap)
