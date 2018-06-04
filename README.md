@@ -29,10 +29,10 @@ We propose a new syntax for accessing certain web platform features, known as _l
 
 ```html
 <script type="module"
-        src="std:virtual-list|https://some.cdn.com/virtual-list.js">
+        src="std:virtual-scroller|https://some.cdn.com/virtual-scroller.js">
 </script>
 
-<virtual-list>...</virtual-list>
+<virtual-scroller>...</virtual-scroller>
 ```
 
 ```html
@@ -43,7 +43,7 @@ storage.get("key").then(...);
 </script>
 ```
 
-As shown here, this `std:x|y` URL syntax contains both an _API identifier_ (e.g. "`virtual-list`" or "`async-local-storage`"), and a _fallback URL_. If the browser does not support the layered API specified by the given API identifier, it instead loads the contents of the fallback URL.
+As shown here, this `std:x|y` URL syntax contains both an _API identifier_ (e.g. "`virtual-scroller`" or "`async-local-storage`"), and a _fallback URL_. If the browser does not support the layered API specified by the given API identifier, it instead loads the contents of the fallback URL.
 
 See [this document](https://docs.google.com/document/d/1jRQjQP8DmV7RL75u_67ps3SB1sjfa1bFZmbCMfJCvrM/edit) for an exploration of alternate syntax options; the above is our tentative choice for now.
 
@@ -110,7 +110,7 @@ When judging whether a feature is a good fit for the layered APIs effort, here a
 
 ## Styling and UI-component layered APIs
 
-Several potentially good layered APIs, including the [infinite virtual list component](https://github.com/domenic/infinite-list-study-group), are UI components. Such components should generally come with minimal styling—at least as minimal, if not more, than existing standard HTML UI components. It would not be appropriate to encode a specific UI styling, like Material Design (Google) or Cupertino (Apple), into the layered APIs.
+Several potentially good layered APIs, including the [infinite virtual scroller component](https://github.com/domenic/infinite-list-study-group), are UI components. Such components should generally come with minimal styling—at least as minimal, if not more, than existing standard HTML UI components. It would not be appropriate to encode a specific UI styling, like Material Design (Google) or Cupertino (Apple), into the layered APIs.
 
 At the same time, layered APIs should be extremely styleable: authors should be able to make them fit into their pages, ideally with only CSS modifications. In the current landscape, this will require care; e.g. we cannot over-use shadow DOM, since it cannot be styled inside. In the future, [CSS shadow parts](https://tabatkins.github.io/specs/css-shadow-parts/) will greatly help with this.
 
@@ -120,12 +120,12 @@ That said, it’s important that built in UI components on the platform look and
 
 We're currently prototyping the ideas in this repository in Blink, while working on two particular layered APIs. Those are:
 
-* [`<virtual-list>`](https://github.com/valdrinkoshi/virtual-list): a HTML element that maps a provided set of JavaScript objects onto DOM nodes, and renders only the DOM nodes that are currently visible, leaving the rest "virtualized".
+* [`<virtual-scroller>`](https://github.com/valdrinkoshi/virtual-scroller): a HTML element that maps a provided set of JavaScript objects onto DOM nodes, and renders only the DOM nodes that are currently visible, leaving the rest "virtualized".
 * [Async local storage](https://github.com/domenic/async-local-storage): an asynchronous key-value store, including isolated storage areas and support for non-string values, layered on top of IndexedDB.
 
 You can try these APIs, as well as the general LAPI infrastructure, in Chrome versions after 68.0.3420.0 (use [Chrome Canary](https://www.google.com/chrome/browser/canary.html)) with the `#enable-layered-api` flag flipped in `chrome://flags`. (Alternately, you can instead use `#enable-experimental-productivity-features` to get LAPIs plus some [feature policy](https://github.com/WICG/feature-policy/) work, or use the general `#enable-experimental-web-platform-features` flag to get all the currently-flagged web platform features.)
 
-For demos, check out the [`<virtual-list>` demo repository](https://valdrinkoshi.github.io/virtual-list/demo/), or play with the following:
+For demos, check out the [`<virtual-scroller>` demo repository](https://valdrinkoshi.github.io/virtual-scroller/demo/), or play with the following:
 
-* [`<virtual-list>` playground](https://glitch.com/edit/#!/lowly-pantry)
+* [`<virtual-scroller>` playground](https://glitch.com/edit/#!/lowly-pantry)
 * [Async local storage playground](https://glitch.com/edit/#!/bead-hubcap)
