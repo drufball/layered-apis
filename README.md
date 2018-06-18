@@ -29,7 +29,7 @@ We propose a new syntax for accessing certain web platform features, known as _l
 
 ```html
 <script type="module"
-        src="std:virtual-scroller|https://some.cdn.com/virtual-scroller.js">
+        src="std:virtual-scroller|https://some-cdn.example/virtual-scroller.mjs">
 </script>
 
 <virtual-scroller>...</virtual-scroller>
@@ -37,7 +37,7 @@ We propose a new syntax for accessing certain web platform features, known as _l
 
 ```html
 <script type="module">
-import { storage } from "std:async-local-storage|https://other.cdn.com/async-local-storage.js";
+import { storage } from "std:async-local-storage|https://other-cdn.example/async-local-storage.mjs";
 
 storage.get("key").then(...);
 </script>
