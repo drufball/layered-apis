@@ -164,7 +164,7 @@ This feature detection is asynchronous, but does not require any network round-t
 Although all of our examples tend to use absolute fallback URLs, since we anticipate fallbacks being located on CDNs or similar, relative URLs also work:
 
 ```js
-import { storage } from "std:async-local-storage:lib/polyfills/als.mjs";
+import { storage } from "std:async-local-storage|lib/polyfills/als.mjs";
 ```
 
 ```html
