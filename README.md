@@ -25,6 +25,10 @@ Enable the creation of high-level features such that:
 
 ### Part 1: the infrastructure
 
+**WARNING: this syntax is under heavy discussion and probably will not survive future revisions. What is shown here is an idea that we once thought was a good one, but have since realized has many problems. See [the issue tracker](https://github.com/drufball/layered-apis/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22fallback+semantics%22) for open issues on it.**
+
+**Until we know what a better solution would be, we leave the below to give some concrete idea of the problem we're trying to solve. But be aware we are actively looking into replacements.**
+
 We propose a new syntax for accessing certain web platform features, known as _layered APIs_, by importing them from special URLs:
 
 ```html
