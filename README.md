@@ -16,7 +16,7 @@ Additionally, the incentive for web developers to adopt higher-level APIs is low
 
 Enable the creation of high-level features such that:
 
-- They stay layered on top of low-level features, never getting access to new capabilities unavailable to web developers
+- They stay layered on top of low-level features, never making access to new capabilities unavailable to web developers
 - Runtime costs for web developers using the features scale
 - Maintenance costs for standardizing and implementing the features scale
 - Fallback to polyfills, for browsers that do not support the features, is easy and transparent
